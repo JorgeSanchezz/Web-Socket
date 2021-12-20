@@ -1,0 +1,92 @@
+<body>
+    <p></p>
+    <p></p>
+    <div>
+        <style >
+           h1 { color: #1b91c4;}
+        </style>
+        <h1> WebSocket.
+        <img src="images/icon.png" width="80" height="80">
+    </h1>
+
+    <input type="texr" placeholder="Escribir mensaje.." onkeypress="return soloLetras(event)" id="mensajeinput"/>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    </div>
+    <div>
+        <p></p>
+        <p></p>
+        <div id="botones">
+        <button type="button" id="open" onclick="openSocket();">Open</button>
+        <button type="button" id="send" onclick="send();">Send</button>
+        <button type="button" id="close" onclick="closeSocket();">Close</button>
+        </div>
+    </div>
+    <p></p>
+    <p></p>
+
+<div align="center">
+    <fieldset>
+        <div id="messages"></div>
+    </fieldset>
+</div>
+
+    <script>
+    function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = "8-37-39-46";
+
+       tecla_especial = false
+       for(var i in especiales){
+            if(key == especiales[i]){
+                tecla_especial = true;
+                break;
+            }
+        }
+        if(letras.indexOf(tecla)==-1 && !tecla_especial){
+            return false;
+        }
+    }
+</script>
+
+    <script type="text/javascript">
+        var webSocket;
+        var messages=document.getElementById("messages");
+        function openSocket()
+        {
+            if(webSocket!==undefined && webSocket.readyState!==WebSocket.CLOSED)
+            {
+                writeResponse("Websocket abierto");
+                return;
+            }
+            webSocket = new WebSocket("ws://localhost:8080/WebSocket/ProcesoSocket");
+            webSocket.onepen = function(event)
+            {
+                if(event.data==undefined)
+                    return;
+                writeResponse(event.data);
+            };
+            webSocket.onmessage = function(event)
+            {
+                writeResponse(event.data);
+            };
+            
+            webSocket.onclose = function(event)
+            {
+                writeResponse("Conexion cerrada");
+            };
+        }
+        function send(){
+            var text=document.getElementById("mensajeinput").value;
+            webSocket.send(text);
+        }
+        function closeSocket(){
+            webSocket.close();
+        }
+        function writeResponse(text){
+            messages.innerHTML += "<br/>" + text;
+        } 
+        </script>
+</body>
+</html>

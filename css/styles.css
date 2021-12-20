@@ -1,0 +1,38 @@
+body{
+	text-align: center;
+    background:"images/fondo.jpg";
+
+}
+#mensajeinput {
+    text-align: center;
+    border: 2px solid #000000;
+    background:  #d0c0de;
+    padding: 10px 100px;
+}
+#messages {
+    text-align: center;
+}
+#send, #open, #close{
+	padding: 20px 10px;
+	width: 100px;
+	border: 1px solid #000000;
+	background: #DDDDDD;
+	font-weight: bold;
+	border-radius: 5px;
+}
+nav{
+	margin: 5px 0px;
+}
+
+fieldset {
+	float: center;
+	width: 20%;
+	border: solid gray 1px;
+	background-color: #f7fff7;
+	padding: 60px;
+	display: block;
+}
+
+.clear{
+	clear: both;
+}
